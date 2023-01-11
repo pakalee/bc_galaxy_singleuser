@@ -1,0 +1,32 @@
+<%-
+
+  # This is where the single-user install is. Stop if we don't see it.
+  User=ENV['USER']
+  Galaxy_dir="/home/#{User}/opt/galaxy"
+  raise StandardError, "Galaxy is not installed for user #{User}!" unless Dir.exists? Galaxy_dir
+
+  cores = num_cores.to_i
+  slurm_args = ["--cpus-per-task", "#{cores}"]
+
+  slurm_args += ["--account", "#{slurm_account}"]
+  slurm_args += ["--nodes", "1"]
+  slurm_args += ["--nodelist", "viz-0002"]
+  slurm_args += ["--ntasks-per-node", "1"]
+
+  slurm_args += salloc.split /(?:\r?\n)+/
+
+  slurm_args += ["--mail-user", "#{email}"] unless email.empty?
+-%>
+---
+batch_connect:
+  template: "basic"
+  conn_params:
+    - url_ext
+script:
+  queue_name: "viz"
+  job_name: "Galaxy"
+  native:
+    <%- slurm_args.each do |arg| %>
+    - "<%= arg %>"
+    <%- end %>
+

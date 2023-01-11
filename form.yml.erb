@@ -1,0 +1,42 @@
+---
+cluster: "frontail"
+
+form:
+  - slurm_account
+  - bc_num_hours
+  - num_cores
+  - bc_salloc_on_started
+  - salloc
+  - bc_email_on_started
+  - email
+
+attributes:
+  slurm_account:
+    widget: "select"
+    label: "Slurm Account"
+    options: [<%= Slurm.accounts.join(', ') %>]
+    help: |
+      This the your account/group assigned to you to run jobs under.
+      Usually the name of dept or project.
+  bc_num_hours:
+    value: 4
+    min: 1
+    max: 168
+  num_cores:
+    widget: "number_field"
+    label: "Number of CPUs"
+    value: 1
+    min: 1
+    max: 2 
+    step: 1
+  bc_salloc_on_started:
+    widget: "check_box"
+    label: "I have additional Slurm options to enter"
+  salloc:
+    widget: "text_area"
+    label: "salloc options"
+    help: |
+      Options to salloc for this desktop/viz job. One option per line.
+    placeholder: "--nodelist=viz-0002\n"
+  email:
+    widget: "email_field"

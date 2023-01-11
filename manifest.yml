@@ -1,0 +1,11 @@
+---
+name: Galaxy
+category: Interactive Apps
+subcategory: Bioinformatics
+role: batch_connect
+version: 22.05
+description: |
+  Galaxy is a bioinformatics workflow-management system.
+  This app will launch a single-user [Galaxy] instance on a viz node.
+
+  [Galaxy]: https://galaxyproject.org/
